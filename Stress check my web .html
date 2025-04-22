@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stress Check Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e6f2f2;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    h1, h2 {
+      font-size: 2rem;
+      color: #2c3e50;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+    }
+
+    .page {
+      display: none;
+    }
+
+    #homePage {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Home Page -->
+  <div id="homePage" class="page">
+    <h1>Welcome to the Stress Check Website</h1>
+    <p>Take this quiz to assess your current stress level.</p>
+    <button onclick="showQuizPage()">Start Quiz</button>
+  </div>
+
+  <!-- Quiz Page -->
+  <div id="quizPage" class="page">
+    <h2>Stress Quiz</h2>
+    <form id="quizForm">
+      <label>1. Do you often feel tired?
+        <select name="q1">
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+      </label>
+
+      <label>2. Do you have trouble sleeping?
+        <select name="q2">
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+      </label>
+
+      <label>3. Do you feel anxious or angry?
+        <select name="q3">
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+      </label>
+
+      <label>4. Do you find it difficult to concentrate?
+        <select name="q4">
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+      </label>
+
+      <label>5. Do you avoid social interactions?
+        <select name="q5">
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+      </label>
+
+      <label>6. Do you experience headaches or body pain?
+        <select name="q6">
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+      </label>
+
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Result Page -->
+  <div id="resultPage" class="page">
+    <h2>Your Stress Level</h2>
+    <div id="resultText"></div>
+    <button onclick="showHomePage()">Go to Home</button>
+  </div>
+
+  <script>
+    function showQuizPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('quizPage').style.display = 'block';
+    }
+
+    function showHomePage() {
+      document.getElementById('quizPage').style.display = 'none';
+      document.getElementById('resultPage').style.display = 'none';
+      document.getElementById('homePage').style.display = 'block';
+    }
+
+    function showResultPage(score) {
+      document.getElementById('quizPage').style.display = 'none';
+      document.getElementById('resultPage').style.display = 'block';
+
+      let message = '';
+      if (score <= 4) {
+        message = "✅ Low Stress: You are doing well. Keep it up!";
+      } else if (score <= 8) {
+        message = "⚠️ Moderate Stress: Try to take breaks, rest, and manage workload.";
+      } else {
+        message = "❗ High Stress: You need to rest and seek support. Please take care.";
+      }
+
+      document.getElementById('resultText').textContent = message;
+    }
+
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      let score = 0;
+
+      for (let i = 1; i <= 6; i++) {
+        score += parseInt(form["q" + i].value);
+      }
+
+      showResultPage(score);
+    });
+  </script>
+
+</body>
+</html>
